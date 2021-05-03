@@ -10,11 +10,12 @@ import com.vaadin.flow.router.PreserveOnRefresh;
 import com.vaadin.flow.router.Route;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestClientException;
 
 import java.math.BigDecimal;
 import java.util.List;
 
-@Route("/exchange")
+@Route("/")
 @Component
 @PreserveOnRefresh
 public class GUI extends VerticalLayout {
@@ -45,7 +46,7 @@ public class GUI extends VerticalLayout {
         });
     }
 
-    private void buttonFn(ExchangeService exchangeService, Select selectFrom, Select selectTo, BigDecimalField amount, TextField exchangeAmountField) {
+    private void buttonFn(ExchangeService exchangeService, Select selectFrom, Select selectTo, BigDecimalField amount, TextField exchangeAmountField) throws RestClientException {
         BigDecimal amountAfter = new BigDecimal(amount.getValue().toString());
         BigDecimal conversionRate = new BigDecimal(exchangeService.getConversionRate(
                 selectFrom.getValue().toString(), selectTo.getValue().toString()
